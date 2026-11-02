@@ -1,0 +1,22 @@
+[project]
+name = "cbct-cor-v19plus"
+version = "0.19.0"
+description = "Coarse-to-fine 3-D U-Net / SCN landmark detection of the first-molar centres of resistance in dental CBCT"
+requires-python = ">=3.10"
+
+[tool.ruff]
+line-length = 100
+extend-include = ["*.ipynb"]
+
+[tool.ruff.lint]
+# Pyflakes, syntax errors and bugbear. The pipeline stages share one notebook namespace
+# (see src/cbct_cor/README.md), so cross-stage names, re-imports and intentional
+# redefinitions are not errors here.
+select = ["F", "E9", "B"]
+ignore = [
+  "F401",  # imports are shared with later stages
+  "F811",  # later stages refine earlier helpers on purpose
+  "F821",  # names come from earlier stages
+  "B023",  # closures in loops are called inside the same iteration
+  "B905",  # zip() lengths are checked explicitly where it matters
+]
